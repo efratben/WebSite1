@@ -2,17 +2,31 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
+    <!-- font link -->
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,900|Oswald:300,400,700" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <title></title>
     <link href="loadPage.css" rel="stylesheet" />
+    <link href="mainPage.css" rel="stylesheet" />
     <style>
-
     </style>
     <script>
         $(document).ready(function () {
-            $(".loadPage").hide();
-            $(".mainPage").delay(3000).fadeIn(100);
+            setTimeout(function () {
+                $('.loadPage').slideUp("slow");
+            }, 5000);
+
+            $(".mainPage").hide();
+
+            // Show the div in 5s
+            $(".mainPage").delay(4000).fadeIn(1000);
         });
+
+        document.getElementById("startPlay").onclick = function () {
+            location.href = "http://www.w3schools.com";
+           
+        };
 
     </script>
 </head>
@@ -27,7 +41,87 @@
         </center>
     </div>
     <div class="mainPage">
-        <h1>hello</h1>
+        <center>
+            <h1>The Movies Play</h1>
+            <div class="container">
+                <div class="child-container">
+                    <img src="https://picsum.photos/100" alt="pic 1">
+                </div>
+                <div class="child-container">
+                    <img src="https://picsum.photos/200" alt="pic 2">
+                </div>
+                <div class="child-container">
+                    <img src="https://picsum.photos/300" alt="pic 3">
+                </div>
+                <div class="child-container">
+                    <img src="https://picsum.photos/400" alt="pic 4">
+                </div>
+                <div class="child-container">
+                    <img src="https://picsum.photos/500" alt="pic 5">
+                </div>
+                <div class="child-container">
+                    <img src="https://picsum.photos/600" alt="pic 6">
+                </div>
+                <div class="child-container">
+                    <img src="https://picsum.photos/150" alt="pic 7">
+                </div>
+                <div class="child-container">
+                    <img src="https://picsum.photos/250" alt="pic 8">
+                </div>
+                <div class="child-container">
+                    <img src="https://picsum.photos/350" alt="pic 9">
+                </div>
+                <div class="child-container">
+                    <img src="https://picsum.photos/450" alt="pic 10">
+                </div>
+                <div class="child-container">
+                    <img src="https://picsum.photos/550" alt="pic 11">
+                </div>
+                <div class="child-container">
+                    <img src="https://picsum.photos/650" alt="pic 12">
+                </div>
+                <div class="child-container">
+                    <img src="https://picsum.photos/110" alt="pic 13">
+                </div>
+                <div class="child-container">
+                    <img src="https://picsum.photos/210" alt="pic 14">
+                </div>
+                <div class="child-container">
+                    <img src="https://picsum.photos/310" alt="pic 15">
+                </div>
+                <div class="child-container">
+                    <img src="https://picsum.photos/410" alt="pic 16">
+                </div>
+                <div class="child-container">
+                    <img src="https://picsum.photos/510" alt="pic 17">
+                </div>
+                <div class="child-container">
+                    <img src="https://picsum.photos/610" alt="pic 18">
+                </div>
+                <div class="child-container">
+                    <img src="https://picsum.photos/125" alt="pic 19">
+                </div>
+                <div class="child-container">
+                    <img src="https://picsum.photos/225" alt="pic 20">
+                </div>
+                <div class="child-container">
+                    <img src="https://picsum.photos/325" alt="pic 21">
+                </div>
+                <div class="child-container">
+                    <img src="https://picsum.photos/425" alt="pic 22">
+                </div>
+                <div class="child-container">
+                    <img src="https://picsum.photos/525" alt="pic 23">
+                </div>
+                <div class="child-container">
+                    <img src="https://picsum.photos/625" alt="pic 24">
+                </div>
+            </div>
+            <a href="playGame.html" class="custom-btn btn-8" id="startPlay"><span>Start</span></a>
+            <!--<button class="custom-btn btn-8" id="startPlay"><span>Start</span></button>-->
+           
+
+        </center>        
     </div>
 </body>
 </html>

@@ -1,0 +1,223 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>The Movie Game</title>
+    <script src="movies.js"></script>
+    <script src="posters.js"></script>
+    <script src="moviesUtils.js"></script>
+    <script src="utils.js"></script>
+    <link href="StyleSheet.css" rel="stylesheet" />
+
+    <!--//boot-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+    <script>
+
+
+        countergames = 0;
+        function play() {
+            // start your code here and work on the movies array
+            points = 0;
+            strikes = 0;
+            calibration(points, strikes)
+            if (countergames == 0) {
+                arrGenres = CreateArrGenres()
+            }
+            countergames++;
+            //הגרלת  שם סרט
+            randomMovie = [];
+            randomMovie = ShowMovie();
+            wrongGenres = [];
+            wrongGenres = wrongGenres2(randomMovie);
+            console.log(randomMovie);
+            console.log(wrongGenres);
+            answers = createAnswer(randomMovie, wrongGenres);
+            console.log(answers);
+            var copyOfAnswer = answers.slice();
+            console.log(copyOfAnswer);
+            printAnswer(copyOfAnswer);
+        }
+        //Create Arr Genres no reapet
+        function CreateArrGenres() {
+            arrGenres1 = [];
+            for (var i = 0; i < movies.length; i++) {
+                for (var j = 0; j < movies[i].genres.length; j++) {
+                    counter = 0;
+                    for (var k = 0; k < arrGenres1.length; k++) {
+                        if (movies[i].genres[j].name != arrGenres1[k]) {
+                            counter++;
+                        }
+                    }
+                    if (counter == arrGenres1.length) {
+                        arrGenres1[length++] = movies[i].genres[j].name;
+                    }
+                }
+            }
+            return arrGenres1;
+        }
+        //calibration points and strikes
+        function calibration(points, strikes) {
+            str = ""
+            str += "<div id='points' class='col-6'>";
+            str += "<h3 class='big' id='special'> Your Score:" + points + "</h3>";
+            str += "</div>";
+            str += "<div id='strikes' class='col-6'>";
+            str += "<h3 class='big'> Your strikes:" + strikes + "</h3>";
+            str += "</div>";
+            writeToDiv("ph3", str, true);
+        }
+        //show random movie
+        function ShowMovie() {
+            let randomMovie = movies[Math.floor(Math.random() * movies.length)];
+            var str = "";
+            str += "<h1 class='change'>  " + randomMovie.original_title + "</h1>";
+            str += '<img src=" ' + randomMovie.poster_path + '">';
+            str += "<h3>" + question.questionName + "</h3>";
+            writeToDiv("ph1", str, true);
+            return (randomMovie);
+        }
+        //create wrong geners array
+        function wrongGenres2(rand) {
+            wrongGenres = [];
+            for (var i = 0; i < arrGenres.length; i++) {
+                var seen = false;
+                for (var j = 0; j < rand.genres.length; j++) {
+                    if (rand.genres[j].name == arrGenres[i]) {
+                        seen = true;
+                        break;
+                    }
+                }
+                if (seen == false) {
+                    wrongGenres.push(arrGenres[i]);
+                }
+            }
+            return wrongGenres;
+        }
+        //random 3 index from wrong array
+        function createAnswer(rand, wrong) {
+            check = false;
+            let num;
+            let already = [];
+            let start = 0, end = wrong.length;
+            for (var i = 0; i < 3;) {
+                num = (Math.random() * (end - start) + start) ^ 0;
+                check = false;
+                for (var j = 0; j < already.length; j++) {
+                    if (already[j] == num) {
+                        check = true;
+                        break;
+                    }
+                }
+                if (check == false) {
+                    already[i] = num;
+                    i++;
+                }
+            }
+            temp = crate4Answer(already);
+            return temp;
+        }
+        //create array with 4 answer-one good 3 no
+        function crate4Answer(already) {
+            var arr4Answers = [];
+            arr4Answers[0] = randomMovie.genres[Math.floor(Math.random() * randomMovie.genres.length)].name;
+            arr4Answers[1] = wrongGenres[already[0]];
+            arr4Answers[2] = wrongGenres[already[1]];
+            arr4Answers[3] = wrongGenres[already[2]];
+            return arr4Answers;
+        }
+        //mix the array with answer
+        function mixing() {
+            return answers.sort(function (a, b) { return 0.5 - Math.random() });
+        }
+        //save the index
+        function findIndex(temp, copyOfAnswer) {
+            for (var i = 0; i < temp.length; i++) {
+                if (temp[i] == copyOfAnswer[0])
+                    return i;
+            }
+        }
+        //create object
+        question = {
+            questionName: "What is the genre of the movie?",
+            answer: mixing,
+            indexRight: findIndex
+        }
+        //print answer
+        function printAnswer(copyOfAnswer) {
+            arrQus = question.answer();
+            console.log(arrQus);
+            str = "";
+            for (var i = 0; i < arrQus.length; i++) {
+                if (i == question.indexRight(arrQus, copyOfAnswer)) {
+                    str += "<button class='unvisable '  onclick='RightAnswer(this)'>" + arrQus[i] + "</button>"
+                }
+                else {
+                    str += "<button class='unvisable ' onclick='WrongAnswer(this)'>" + arrQus[i] + "</button>"
+                }
+            }
+            writeToDiv("ph2", str, true);
+        }
+        //increase points
+        function RightAnswer(button) {
+            points++;
+            calibration(points, strikes);
+            disabledButton();
+            printButtonNext();
+        }
+        //increase strikes
+        function WrongAnswer(button) {
+            strikes++;
+            calibration(points, strikes);
+            printButtonNext();
+            if (strikes == 5) {
+                disabledButton();
+                document.getElementsByClassName("unvisable");//deleteStartButton
+                document.getElementById("NextQuestion").disabled = true;//deleteNextButton
+                alert("Game Over");
+            }
+            disabledButton();
+        }
+        //disabled all Buttons
+        function disabledButton() {
+            let deleteButton = document.getElementsByClassName("unvisable");
+            for (let i = 0; i < deleteButton.length; i++) {
+                deleteButton[i].disabled = true;
+            }
+        }
+        //function for next Question buttom
+        function NextQuestion(button) {
+            //הגרלת  שם סרט
+            randomMovie = [];
+            randomMovie = ShowMovie();
+            wrongGenres = wrongGenres2(randomMovie);
+            answers = createAnswer(randomMovie, wrongGenres);
+            var copyOfAnswer = answers.slice();
+            printAnswer(copyOfAnswer);
+            document.getElementById("NextQuestion").disabled = true;
+        }
+        //print button next question
+        function printButtonNext() {
+            str = "";
+            str += "<button id='NextQuestion'  onclick='NextQuestion(this)'> Next Question </button>";
+            writeToDiv("ph4", str, true);
+
+        }
+    </script>
+</head>
+<body onload="init()">
+    <div class="container">
+        <div class="row">
+            <button onclick="play()" id="startPlay">Start Game</button>
+        </div>
+        <div id="ph1" class="row"></div>
+        <div id="ph2" class="row"></div>
+        <div id="ph4" class="row"></div>
+        <div id="ph3" class="row"></div>
+    </div>
+</body>
+</html>

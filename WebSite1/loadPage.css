@@ -1,7 +1,7 @@
 ﻿.loader {
     border: 3px solid lightgray;
-    /#d6336c;
-    / width: 200px;
+   
+    width: 200px;
     height: 200px;
     border-radius: 50%;
     border-left-color: transparent;
@@ -11,8 +11,8 @@
 
 #loader2 {
     border: 3px solid lightpink;
-    /#3bc9db;
-    / width: 220px;
+   
+    width: 220px;
     height: 220px;
     position: relative;
     top: -216px;
